@@ -1,0 +1,13 @@
+@import "~vue-material/dist/theme/engine"; // Import the theme engine 
+
+//https://coolors.co/f7c59f-528e5c-5a5766-bfc0c0-ffffff
+
+  @include md-register-theme("default", (
+    primary: #c75e08, // The primary color of your application
+    accent: #5A5766, // The accent or secondary color
+    theme: light // This can be dark or light
+  ));
+
+
+
+@import "~vue-material/dist/theme/all"; // Apply the theme
