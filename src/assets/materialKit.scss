@@ -3,9 +3,9 @@
 //https://coolors.co/f7c59f-528e5c-5a5766-bfc0c0-ffffff
 
   @include md-register-theme("default", (
-    primary: #c75e08, // The primary color of your application
-    accent: #5A5766, // The accent or secondary color
-    theme: light // This can be dark or light
+    primary: rgb(255, 149, 14), // The primary color of your application
+    accent: rgb(128, 128, 128), // The accent or secondary color
+    theme: dark // This can be dark or light
   ));
 
 
