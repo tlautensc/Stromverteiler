@@ -14,8 +14,6 @@
   </div>
 </template>
 
-
-
 <script>
   import TheDrawer from './components/TheDrawer';
   import TheToolbar from './components/TheToolbar';
