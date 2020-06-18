@@ -5,7 +5,7 @@
         <TheToolbar v-on:makeVisible="showNavigation = true"/>
       </md-app-toolbar>
       <md-app-drawer :md-active.sync="showNavigation" md-swipeable>
-        <TheDrawer></TheDrawer>
+        <TheDrawer v-on:makeInvisible="showNavigation = false"/>
       </md-app-drawer>
       <md-app-content>
         <router-view></router-view>

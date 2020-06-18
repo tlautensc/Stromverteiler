@@ -15,6 +15,16 @@ Vue.use(VueRouter)
       name: 'Home',
       component: Home
     },
+    {
+      path: '/live',
+      name: 'Live',
+      component: () => import('../views/Live.vue'),
+    },
+    {
+      path: '/history',
+      name: 'History',
+      component: () => import('../views/History.vue'),
+    },
 ]
 
 const router = new VueRouter({

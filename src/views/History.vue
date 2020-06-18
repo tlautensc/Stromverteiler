@@ -1,13 +1,13 @@
 <template>
   <div class="home">
-    <h1>Home</h1>
+    <h1>History</h1>
     <img alt="Vue logo" src="../assets/logo.png">
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Home'
+  name: 'History'
 
 }
 </script>
