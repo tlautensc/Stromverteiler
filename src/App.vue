@@ -14,29 +14,7 @@
         </div>
       </md-app-toolbar>
 
-      <md-app-drawer :md-active.sync="showNavigation" md-swipeable>
-        <md-toolbar class="md-transparent" md-elevation="0">
-          Navigation
-        </md-toolbar>
-
-        <md-list>
-          <md-list-item>
-            <md-button to="/home">Home</md-button>
-          </md-list-item>
-
-          <md-list-item>
-            <span class="md-list-item-text">Sent Mail</span>
-          </md-list-item>
-
-          <md-list-item>
-            <span class="md-list-item-text">Trash</span>
-          </md-list-item>
-
-          <md-list-item>
-            <span class="md-list-item-text">Spam</span>
-          </md-list-item>
-        </md-list>
-      </md-app-drawer>
+      <TheDrawer></TheDrawer>
 
       <md-app-content>
         <router-view></router-view>
@@ -44,6 +22,21 @@
     </md-app>
   </div>
 </template>
+
+
+
+<script>
+  import TheDrawer from './components/TheDrawer.vue'
+  export default {
+    components: {
+      TheDrawer,
+    },
+    name: 'Temporary',
+    data: () => ({
+      showNavigation: false,
+    })
+  }
+</script>
 
 <style lang="scss" scoped>
   .md-app {
@@ -58,14 +51,3 @@
     max-width: calc(100vw - 125px);
   }
 </style>
-
-
-<script>
-  export default {
-    name: 'Temporary',
-    data: () => ({
-      showNavigation: false,
-      showSidepanel: false
-    })
-  }
-</script>
