@@ -1,6 +1,6 @@
 <template>
   <div class="page-container">
-    <md-app md-waterfall md-mode="fixed">
+    <md-app md-waterfall md-mode="fixed" style="height: 100vh">
       <md-app-toolbar class="md-primary md-small">
         <TheToolbar v-on:makeVisible="showNavigation = true"/>
       </md-app-toolbar>
@@ -30,6 +30,6 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 
 </style>
