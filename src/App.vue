@@ -1,30 +1,33 @@
 <template>
-  <div class="page-container">
-    <md-app md-waterfall md-mode="fixed">
-      <md-app-toolbar class="md-primary md-small">
-        <TheToolbar v-on:makeVisible="showNavigation = true"/>
-      </md-app-toolbar>
-      <md-app-drawer :md-active.sync="showNavigation" md-swipeable>
-        <TheDrawer v-on:makeInvisible="showNavigation = false"/>
-      </md-app-drawer>
-      <md-app-content>
-        <router-view></router-view>
-      </md-app-content>
-    </md-app>
+  <div>
+    <div v-if="!isMobile()">
+      <Computer />
+    </div>
+    <div v-else>
+      <Mobile />
+    </div>
   </div>
 </template>
 
+
 <script>
-  import TheDrawer from './components/TheDrawer';
-  import TheToolbar from './components/TheToolbar';
+  import Computer from './components/Computer';
+  import Mobile from './components/Mobile';
   export default {
     components: {
-      TheDrawer,
-      TheToolbar,
+      Computer,
+      Mobile
     },
-    name: 'Temporary',
-    data: () => ({
-      showNavigation: false,
-    })
+    name: 'App',
+    methods:{
+      isMobile(){
+        if( screen.width < 660 ) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      },
+    }
   }
 </script>

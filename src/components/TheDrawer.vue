@@ -32,6 +32,8 @@ export default {
 </script>
 
 <style>
-
-
+.md-drawer {
+    width: 230px;
+    max-width: calc(100vw - 125px);
+  }
 </style>
