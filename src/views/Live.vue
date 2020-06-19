@@ -3,18 +3,18 @@
     <h1>Live</h1>
     <div class="md-layout md-gutter md-alignment-center" style="margin: auto">
       <div class="md-layout-item md-size-33">
-          <iframe src="http://localhost:3000/d-solo/bOCUe4WGz/test-dashboard?orgId=1&panelId=2&refresh=1s"  frameborder="0" scrolling="0" style="width: 100%; height: 100%; position: relative"></iframe>
+          <vue-friendly-iframe src="http://localhost:3000/d-solo/bOCUe4WGz/test-dashboard?orgId=1&panelId=2&refresh=1s"  frameborder="0" scrolling="0" style="width: 100%; height: 100%; position: relative"></vue-friendly-iframe>
       </div>
       <div class="md-layout-item md-size-33">
-          <iframe src="http://localhost:3000/d-solo/bOCUe4WGz/test-dashboard?orgId=1&panelId=5&refresh=1s"  frameborder="0" scrolling="0" style="width: 100%; height: 100%; position: relative"></iframe>
+          <vue-friendly-iframe src="http://localhost:3000/d-solo/bOCUe4WGz/test-dashboard?orgId=1&panelId=5&refresh=1s"  frameborder="0" scrolling="0" style="width: 100%; height: 100%; position: relative"></vue-friendly-iframe>
       </div>
       <div class="md-layout-item md-size-33">
-          <iframe src="http://localhost:3000/d-solo/bOCUe4WGz/test-dashboard?orgId=1&panelId=6&refresh=1s"  frameborder="0" scrolling="0" style="width: 100%; height: 100%; position: relative"></iframe>
+          <vue-friendly-iframe src="http://localhost:3000/d-solo/bOCUe4WGz/test-dashboard?orgId=1&panelId=6&refresh=1s"  frameborder="0" scrolling="0" style="width: 100%; height: 100%; position: relative"></vue-friendly-iframe>
       </div>
     </div>
     <div class="md-layout md-gutter md-alignment-center" style="margin: auto">
       <div class="md-layout-item md-size-100">
-          <iframe src="http://localhost:3000/d-solo/bOCUe4WGz/test-dashboard?orgId=1&panelId=12&refresh=1s"  frameborder="0" scrolling="0" style="width: 100%; height: 100%; position: relative"></iframe>
+          <vue-friendly-iframe src="http://localhost:3000/d-solo/bOCUe4WGz/test-dashboard?orgId=1&panelId=12&refresh=1s"  frameborder="0" scrolling="0" style="width: 100%; height: 100%; position: relative"></vue-friendly-iframe>
       </div>
     </div>
   </div>
