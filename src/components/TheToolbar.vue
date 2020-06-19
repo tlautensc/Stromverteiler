@@ -2,14 +2,13 @@
 <div>
     <div class="md-toolbar-row">
         <div class="md-toolbar-section-start" @click="makeVisible">
-        <md-button class="md-icon-button">
-            <md-icon>menu</md-icon>
-        </md-button>
+            <md-button class="md-icon-button">
+                <md-icon>menu</md-icon>
+            </md-button>
+            <h3 class="md-title">Tontechnik Butz</h3>
         </div>
     </div>
-    <div class="md-toolbar-row md-toolbar-offset">
-        <h3 class="md-title">Tontechnik Butz</h3>
-    </div>
+    
 </div>
   
 </template>

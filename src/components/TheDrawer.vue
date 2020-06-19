@@ -6,15 +6,15 @@
 
     <md-list>
       <md-list-item>
-        <md-button to="/home">Home</md-button>
+        <md-button to="/home" @click.native="makeInvisible()">Home</md-button>
       </md-list-item>
 
       <md-list-item>
-        <span class="md-list-item-text">Trash</span>
+        <md-button to="/live" @click.native="makeInvisible()">Live</md-button>
       </md-list-item>
 
       <md-list-item>
-        <span class="md-list-item-text">Spam</span>
+        <md-button to="/history" @click.native="makeInvisible()">History</md-button>
       </md-list-item>
     </md-list>
   </div>
@@ -23,10 +23,17 @@
 <script>
 export default {
     name: 'TheDrawer',
+    methods: {
+      makeInvisible() {
+        this.$emit('makeInvisible')
+      }
+    },
 }
 </script>
 
 <style>
-
-
+.md-drawer {
+    width: 230px;
+    max-width: calc(100vw - 125px);
+  }
 </style>
