@@ -1,48 +1,40 @@
 <template>
   <div>
-    <h1>Live</h1>
-    <div class="md-layout md-gutter md-alignment-center" style="margin: auto">
-      <div class="md-layout-item md-size-33">
-          <iframe src="http://localhost:3000/d-solo/bOCUe4WGz/test-dashboard?orgId=1&panelId=2&refresh=1s"  frameborder="0" scrolling="0" style="width: 100%; height: 100%; position: relative"></iframe>
-      </div>
-      <div class="md-layout-item md-size-33">
-          <iframe src="http://localhost:3000/d-solo/bOCUe4WGz/test-dashboard?orgId=1&panelId=5&refresh=1s"  frameborder="0" scrolling="0" style="width: 100%; height: 100%; position: relative"></iframe>
-      </div>
-      <div class="md-layout-item md-size-33">
-          <iframe src="http://localhost:3000/d-solo/bOCUe4WGz/test-dashboard?orgId=1&panelId=6&refresh=1s"  frameborder="0" scrolling="0" style="width: 100%; height: 100%; position: relative"></iframe>
-      </div>
-    </div>
-    <div class="md-layout md-gutter md-alignment-center" style="margin: auto">
-      <div class="md-layout-item md-size-100">
-          <iframe src="http://localhost:3000/d-solo/bOCUe4WGz/test-dashboard?orgId=1&panelId=12&refresh=1s"  frameborder="0" scrolling="0" style="width: 100%; height: 100%; position: relative"></iframe>
-      </div>
-    </div>
+    <h1>Livedaten</h1>
+    <md-tabs md-alignment="left">
+      <md-tab md-label="Übersicht">
+        <Uebersicht />
+      </md-tab>
+      <md-tab md-label="Spannung">
+        <Spannung />
+      </md-tab>
+      <md-tab md-label="Strom">
+        <Strom />
+      </md-tab>
+      <md-tab md-label="Leistung">
+        <Leistung />
+      </md-tab>
+    </md-tabs>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'Live'
+import Uebersicht from '../components/Uebersicht'
+import Spannung from '../components/Spannung'
+import Strom from '../components/Strom'
+import Leistung from '../components/Leistung'
 
+export default {
+  name: 'Live',
+  components: {
+    Uebersicht,
+    Spannung,
+    Strom,
+    Leistung,
+  },
 }
 </script>
 
 <style lang="scss" scoped>
-@import "~vue-material/dist/theme/engine"; // Import the theme engine 
 
-  .md-layout-item {
-    margin-top: 1vh;
-    margin-bottom: 1vh;
-
-    &:after {
-      width: 100%;
-      height: 100%;
-    }
-  }
-  .md-size-33 {
-    height: 35vh;
-  }
-  .md-size-100 {
-    height: 45vh;
-  }
 </style>
