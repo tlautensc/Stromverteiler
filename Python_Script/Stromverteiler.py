@@ -5,8 +5,6 @@ import time
 import pymodbus
 import serial
 import json
-import SimpleHTTPServer
-import SocketServer
 import threading
 import signal
 from collections import deque
@@ -16,7 +14,6 @@ from pymodbus.client.sync import ModbusSerialClient as ModbusClient
 from pymodbus.transaction import ModbusRtuFramer
 from pymodbus.payload import BinaryPayloadDecoder
 from pymodbus.constants import Endian
-from SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
 
 decoded = {'Spannung1' : 230,
             'Strom1' : 0,
@@ -47,105 +44,6 @@ decoded = {'Spannung1' : 230,
             'THDI3' : 0
             }
 
-verlauf = []
-
-for x in range(40):
-    verlauf.append(decoded)
-
-
-
-
-SocketServer.TCPServer.allow_reuse_address = True
-class ThreadedHTTPServer(object):
-    handler = SimpleHTTPServer.SimpleHTTPRequestHandler
-    def __init__(self, host, port):
-        self.server = SocketServer.TCPServer((host,port), self.handler)
-        self.server_thread = threading.Thread(target=self.server.serve_forever)
-        self.server_thread.daemon = True
-
-    def start(self):
-        self.server_thread.start()
-        print('HTTP Server started')
-
-    def stop(self):
-        self.server.shutdown()
-        self.server.server_close()
-
-HTTPServer = ThreadedHTTPServer("",8080)
-HTTPServer.start()
-
-
-clients = []
-
-class WebsocketServer(WebSocket):
-
-    def handleConnected(self):
-        print(self.address, 'connected')
-        clients.append(self)
-        self.sendMessage(unicode(json.dumps(verlauf)))
-
-    def handleClose(self):
-        clients.remove(self)
-        print(self.address, 'closed')
-
-    def handleMessage(self):
-        self.sendMessage(unicode(json.dumps(verlauf)))
-
-
-
-class ThreadedWebsocketServer(object):
-    def __init__(self, host, port, handler):
-        self.server = SimpleWebSocketServer(host, port, handler)
-        self.server_thread = threading.Thread(target=self.server.serveforever)
-        self.server_thread.daemon = True
-
-    def start(self):
-        self.server_thread.start()
-        print('Websocket Server started')
-
-
-MyWebsocketServer = ThreadedWebsocketServer('',8081, WebsocketServer)
-MyWebsocketServer.start()
-
-
-
-
-class ClientUpdater(threading.Thread):
-    def __init__(self):
-        threading.Thread.__init__(self)
-
-    def run(self):
-        while True:
-            verlauf.remove(verlauf[0])
-            verlauf.append(decoded)
-            for x in clients:
-                x.sendMessage(unicode(json.dumps(decoded)))
-            time.sleep(0.5)
-
-clientUpdater = ClientUpdater()
-clientUpdater.daemon = True
-clientUpdater.start()
-
-
-
-
-class perpetualTimer():
-
-    def __init__(self, t, hFunction):
-        self.t=t
-        self.hFunction = hFunction
-        self.thread = Timer(self.t ,self.handle_function)
-
-    def handle_function(self):
-        self.hFunction()
-        self.thread = Timer(self.t,self.handle_function)
-        self.thread.start()
-
-    def start(self):
-        self.thread.start()
-
-    def cancel(self):
-        self.thread.cancel()
 
 
 def signal_handler(signal, frame):
@@ -162,12 +60,9 @@ modbusClient = ModbusClient(method = "rtu", port="/dev/serial0", stopbits = 1, b
 connection = modbusClient.connect()
 
 
-
-
 def updateRegisters():
     result = modbusClient.read_holding_registers(7000,54,unit=0x1)
     decoder1 = BinaryPayloadDecoder.fromRegisters(result.registers, byteorder=Endian.Big, wordorder=Endian.Big)
-
 
     decoded['Spannung1'] = decoder1.decode_32bit_float()
     decoded['Strom1'] = decoder1.decode_32bit_float()
@@ -205,15 +100,9 @@ class RegisterUpdater(threading.Thread):
     def run(self):
         while True:
             updateRegisters()
+            print (decoded['Spannung1'])
             time.sleep(0.2)
 
 registerUpdater = RegisterUpdater()
 registerUpdater.daemon = True
 registerUpdater.start()
-
-keepAlive = threading.Event()
-keepAlive.wait()
-
-#time.sleep(40)
-#t = perpetualTimer(0.5,updateRegisters)
-#t.start()
