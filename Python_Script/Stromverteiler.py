@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import sys
 import time
 import pymodbus
@@ -14,6 +12,7 @@ from pymodbus.client.sync import ModbusSerialClient as ModbusClient
 from pymodbus.transaction import ModbusRtuFramer
 from pymodbus.payload import BinaryPayloadDecoder
 from pymodbus.constants import Endian
+from prometheus_client import start_http_server, Gauge
 
 decoded = {'Spannung1' : 230,
             'Strom1' : 0,
@@ -59,50 +58,72 @@ modbusClient = ModbusClient(method = "rtu", port="/dev/serial0", stopbits = 1, b
 
 connection = modbusClient.connect()
 
+U1 = Gauge('U1', '')
+I1 = Gauge('I1', '')
+P1 = Gauge('P1', 'Wirkleistung')
+PB1 = Gauge('PB1', 'Blindleistung')
+PS1 = Gauge('PS1', 'Scheinleistung')
+WF1 = Gauge('WF1', 'Wirkungsfaktor')
+FTG1 = Gauge('FTG1', 'FaktorTg')
+THDU1 = Gauge('THDU1', '')
+THDI1 = Gauge('THDI1', '')
+
+U2 = Gauge('U2', '')
+I2 = Gauge('I2', '')
+P2 = Gauge('P2', 'Wirkleistung')
+PB2 = Gauge('PB2', 'Blindleistung')
+PS2 = Gauge('PS2', 'Scheinleistung')
+WF2 = Gauge('WF2', 'Wirkungsfaktor')
+FTG2 = Gauge('FTG2', 'FaktorTg')
+THDU2 = Gauge('THDU2', '')
+THDI2 = Gauge('THDI2', '')
+
+U3 = Gauge('U3', '')
+I3 = Gauge('I3', '')
+P3 = Gauge('P3', 'Wirkleistung')
+PB3 = Gauge('PB3', 'Blindleistung')
+PS3 = Gauge('PS3', 'Scheinleistung')
+WF3 = Gauge('WF3', 'Wirkungsfaktor')
+FTG3 = Gauge('FTG3', 'FaktorTg')
+THDU3 = Gauge('THDU3', '')
+THDI3 = Gauge('THDI3', '')
 
 def updateRegisters():
     result = modbusClient.read_holding_registers(7000,54,unit=0x1)
     decoder1 = BinaryPayloadDecoder.fromRegisters(result.registers, byteorder=Endian.Big, wordorder=Endian.Big)
 
-    decoded['Spannung1'] = decoder1.decode_32bit_float()
-    decoded['Strom1'] = decoder1.decode_32bit_float()
-    decoded['Wirkleistung1'] = decoder1.decode_32bit_float()
-    decoded['Blindleistung1'] = decoder1.decode_32bit_float()
-    decoded['Scheinleistung1'] = decoder1.decode_32bit_float()
-    decoded['Wirkungsfaktor1'] = decoder1.decode_32bit_float()
-    decoded['FaktorTg1'] = decoder1.decode_32bit_float()
-    decoded['THDU1'] = decoder1.decode_32bit_float()
-    decoded['THDI1'] = decoder1.decode_32bit_float()
-    decoded['Spannung2'] = decoder1.decode_32bit_float()
-    decoded['Strom2'] = decoder1.decode_32bit_float()
-    decoded['Wirkleistung2'] = decoder1.decode_32bit_float()
-    decoded['Blindleistung2'] = decoder1.decode_32bit_float()
-    decoded['Scheinleistung2'] = decoder1.decode_32bit_float()
-    decoded['Wirkungsfaktor2'] = decoder1.decode_32bit_float()
-    decoded['FaktorTg2'] = decoder1.decode_32bit_float()
-    decoded['THDU2'] = decoder1.decode_32bit_float()
-    decoded['THDI2'] = decoder1.decode_32bit_float()
-    decoded['Spannung3'] = decoder1.decode_32bit_float()
-    decoded['Strom3'] = decoder1.decode_32bit_float()
-    decoded['Wirkleistung3'] = decoder1.decode_32bit_float()
-    decoded['Blindleistung3'] = decoder1.decode_32bit_float()
-    decoded['Scheinleistung3'] = decoder1.decode_32bit_float()
-    decoded['Wirkungsfaktor3'] = decoder1.decode_32bit_float()
-    decoded['FaktorTg3'] = decoder1.decode_32bit_float()
-    decoded['THDU3'] = decoder1.decode_32bit_float()
-    decoded['THDI3'] = decoder1.decode_32bit_float()
+    U1.set(decoder1.decode_32bit_float())
+    I1.set(decoder1.decode_32bit_float())
+    P1.set(decoder1.decode_32bit_float())
+    PB1.set(decoder1.decode_32bit_float())
+    PS1.set(decoder1.decode_32bit_float())
+    WF1.set(decoder1.decode_32bit_float())
+    FTG1.set(decoder1.decode_32bit_float())
+    THDU1.set(decoder1.decode_32bit_float())
+    THDI1.set(decoder1.decode_32bit_float())
 
+    U2.set(decoder1.decode_32bit_float())
+    I2.set(decoder1.decode_32bit_float())
+    P2.set(decoder1.decode_32bit_float())
+    PB2.set(decoder1.decode_32bit_float())
+    PS2.set(decoder1.decode_32bit_float())
+    WF2.set(decoder1.decode_32bit_float())
+    FTG2.set(decoder1.decode_32bit_float())
+    THDU2.set(decoder1.decode_32bit_float())
+    THDI2.set(decoder1.decode_32bit_float())
 
-class RegisterUpdater(threading.Thread):
-    def __init__(self):
-        threading.Thread.__init__(self)
+    U3.set(decoder1.decode_32bit_float())
+    I3.set(decoder1.decode_32bit_float())
+    P3.set(decoder1.decode_32bit_float())
+    PB3.set(decoder1.decode_32bit_float())
+    PS3.set(decoder1.decode_32bit_float())
+    WF3.set(decoder1.decode_32bit_float())
+    FTG3.set(decoder1.decode_32bit_float())
+    THDU3.set(decoder1.decode_32bit_float())
+    THDI3.set(decoder1.decode_32bit_float())
 
-    def run(self):
-        while True:
-            updateRegisters()
-            print (decoded['Spannung1'])
-            time.sleep(0.2)
-
-registerUpdater = RegisterUpdater()
-registerUpdater.daemon = True
-registerUpdater.start()
+if __name__ == '__main__':
+    start_http_server(8000)
+    while True:
+        updateRegisters()
+        time.sleep(0.5)

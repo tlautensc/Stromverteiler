@@ -1,0 +1,8 @@
+version: '2'
+services:
+    grafana:
+        network_mode: "host"
+        build: ./Grafana
+    prometheus:
+        network_mode: "host"
+        build: ./Prometheus
